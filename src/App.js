@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./styles.css";
 
 const GuessNumberGame = () => {
   // 使用 useState 定義狀態
