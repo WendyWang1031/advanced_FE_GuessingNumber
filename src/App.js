@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const GuessNumberGame = () => {
   // 使用 useState 定義狀態
   const [answer, setAnswer] = useState(Math.floor(Math.random() * 100) + 1);
   const [userInput, setUserInput] = useState("");
-  const [message, setMessage] = useState("猜一個介於 1 到 100 之間的數字：");
+  const [message, setMessage] = useState("");
 
-  // 使用 useEffect 來模擬 componentDidMount
-  useEffect(() => {
-    const guessField = document.getElementById("guessField");
-
-    // 使用 DOM Element 操作
-    guessField.addEventListener("input", handleInputChange);
-
-    // 返回清理函式以模擬 componentWillUnmount
-    return () => {
-      guessField.removeEventListener("input", handleInputChange);
-    };
-  }, []); // 空依賴表示僅在初次渲染時執行
-
-  // 使用 DOM Element 操作的函式
+  // 處理使用者輸入的函式
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
   };
@@ -44,9 +31,16 @@ const GuessNumberGame = () => {
   return (
     <div>
       <h1>猜數字遊戲</h1>
-      <p>{message}</p>
-      <input type="text" id="guessField" value={userInput} />
+      <p>猜一個介於 1 到 100 之間的數字</p>
+
+      <input
+        type="text"
+        id="guessField"
+        value={userInput}
+        onChange={handleInputChange}
+      />
       <button onClick={handleGuess}>猜！</button>
+      <p>{message}</p>
     </div>
   );
 };
