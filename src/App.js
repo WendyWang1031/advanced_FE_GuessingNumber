@@ -1,3 +1,4 @@
+/*
 import React, { useState } from "react";
 
 import "./styles.css";
@@ -30,7 +31,6 @@ const GuessNumberGame = () => {
     }
   };
 
-  //html的部分
   return (
     <div>
       <h1>猜數字遊戲</h1>
@@ -42,6 +42,37 @@ const GuessNumberGame = () => {
         onChange={handleInputChange}
       />
       <button onClick={handleGuess}>猜！</button>
+      <p className="message">{message}</p>
+    </div>
+  );
+};
+
+export default GuessNumberGame;
+*/
+
+import React, { useState } from "react";
+
+const GuessNumberGame = () => {
+  const [userInput, setUserInput] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleInputChange = (event) => {
+    setUserInput(event.target.value);
+  };
+
+  // 注意：此處未添加 handleGuess 函式，僅作為 UI 演示
+
+  return (
+    <div>
+      <h1>猜數字遊戲</h1>
+      <p>猜一個介於 1 到 100 之間的數字：</p>
+      <input
+        type="text"
+        id="guessField"
+        value={userInput}
+        onChange={handleInputChange}
+      />
+      <button>猜！</button>
       <p className="message">{message}</p>
     </div>
   );
