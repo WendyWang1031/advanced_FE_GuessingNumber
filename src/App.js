@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./styles.css";
 
 const GuessNumberGame = () => {
-  // 使用 useState 定義狀態
-  const [answer, setAnswer] = useState(Math.floor(Math.random() * 100) + 1);
+  const [answer, setAnswer] = useState(null);
   const [userInput, setUserInput] = useState("");
   const [message, setMessage] = useState("");
+
+  // 使用 useEffect 來取得遊戲答案
+  useEffect(() => {
+    axios
+      .get("http://localhost:9999/answer")
+      .then((response) => {
+        setAnswer(response.data.answer[0]);
+        console.log("遊戲答案:", response.data.answer[0]);
+      })
+      .catch((error) => {
+        console.error("發生錯誤:", error);
+        console.error("詳細錯誤資訊:", error.response);
+      });
+  }, []);
 
   // 處理使用者輸入的函式
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
+    setMessage(""); // 清除訊息
   };
 
   // 處理猜測的函式
