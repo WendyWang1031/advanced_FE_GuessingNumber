@@ -9,17 +9,27 @@ const GuessNumberGame = () => {
 
   // 使用 useEffect 來取得遊戲答案
   useEffect(() => {
-    axios
-      .get("http://localhost:9999/answer")
-      .then((response) => {
-        setAnswer(response.data.answer[0]);
-        console.log("遊戲答案:", response.data.answer[0]);
-      })
-      .catch((error) => {
+    let skip = false; // 設置 skip 變數
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:9999/answer");
+        if (!skip) {
+          setAnswer(response.data.answer[0]);
+          console.log("遊戲答案:", response.data.answer[0]);
+        }
+      } catch (error) {
         console.error("發生錯誤:", error);
         console.error("詳細錯誤資訊:", error.response);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      skip = true; // 在組件卸載時設置 skip 為 true，避免 setState 錯誤
+    };
+  }, []); // 空的依賴列表表示僅在組件的初始渲染時執行
 
   // 處理使用者輸入的函式
   const handleInputChange = (event) => {
